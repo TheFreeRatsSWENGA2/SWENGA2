@@ -7,7 +7,6 @@ from App.models import User
 from App.main import create_app
 # from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize )
 # from App.controllers import ( create_course, create_staff, assign_staff, view_course_staff )
-#test for commit
 from App.controllers import *
 
 
