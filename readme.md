@@ -1,18 +1,13 @@
+```py
 @app.cli.command('create_course')
-<br>
 flask create_course
-<br>
 @app.cli.command('create_staff')
-<br>
 flask create_staff
-<br>
 @app.cli.command('assign_staff')
-<br>
 flask assign_staff
-<br>
 @app.cli.command('view_course_staff')
-<br>
 flask view_course_staff
+```
 
 
 
