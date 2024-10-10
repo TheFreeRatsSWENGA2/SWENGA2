@@ -8,7 +8,7 @@ flask assign_staff
 @app.cli.command('view_course_staff')
 flask view_course_staff
 ```
-
+p
 
 
 
