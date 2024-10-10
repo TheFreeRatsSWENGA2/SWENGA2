@@ -36,10 +36,30 @@ class UserUnitTests(unittest.TestCase):
         user = User("bob", password)
         assert user.check_password(password)
 
+class CourseUnitTests(unittest.TestCase):
+
+    @patch('builtins.input', side_effect=["Math101"])
+    def test_create_course(self, mock_input):
+        course = create_course()
+        self.assertEqual(course.name, "Math101")
+
+    @patch('App.Course.query')
+    def test_list_courses(self, mock_query):
+
+        mock_query.all.return_value = [
+            Course(name="Math101"),
+            Course(name="Physics202"),
+        ]
+
+        courses = list_courses()
+
+        self.assertEqual(len(courses), 2)
+        self.assertEqual(courses[0].name, "Math101")
+        self.assertEqual(courses[1].name, "Physics202")
+
 '''
     Integration Tests
 '''
-
 # This fixture creates an empty database for the test and deletes it after the test
 # scope="class" would execute the fixture once and resued for all methods in the class
 @pytest.fixture(autouse=True, scope="module")
@@ -48,7 +68,6 @@ def empty_db():
     create_db()
     yield app.test_client()
     db.drop_all()
-
 
 def test_authenticate():
     user = create_user("bob", "bobpass")
@@ -69,26 +88,4 @@ class UsersIntegrationTests(unittest.TestCase):
         update_user(1, "ronnie")
         user = get_user(1)
         assert user.username == "ronnie"
-        
 
-class CourseUnitTests(unittest.TestCase):
-
-    @patch('builtins.input', side_effect=["Math101"])
-    def test_create_course(self, mock_input):
-        course = create_course()
-        self.assertEqual(course.name, "Math101")
-
-    @patch('App.Course.query') 
-    def test_list_courses(self, mock_query):
-        
-        mock_query.all.return_value = [
-            Course(name="Math101"),
-            Course(name="Physics202"),
-        ]
-
-        courses = list_courses()
-
-        self.assertEqual(len(courses), 2) 
-        self.assertEqual(courses[0].name, "Math101")
-        self.assertEqual(courses[1].name, "Physics202")
-        
