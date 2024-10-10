@@ -4,21 +4,57 @@ from App.models import Course
 from App.models import Assignment
 
 def assign_staff():
-    course_name = input("Enter Course Name: ")
-    staff_id = input("Enter Staff ID: ")
+    while True:
+        course_name = input("Enter course name: ").strip()
+
+        existingCourse = Course.query.filter_by(name=course_name).first()
+
+        if not existingCourse:
+            print("Course does not exist")
+        
+        else:
+
+            if not course_name:
+                print("Course name cannot be empty!")
+                continue
+
+            break
+
+    while True:
+        staff_id = input("Enter staff ID: ").strip()
+
+        existingStaff = Staff.query.filter_by(id=staff_id).first()
+
+        if not existingStaff:
+            print("STaff member does not exist")
+
+
+        else:
+
+            if not staff_id:
+                print("Staff ID cannot be empty!")
+                continue
+                
+            break
+
     assignment = Assignment(course_name=course_name, staff_id=staff_id)
     db.session.add(assignment)
     db.session.commit()
     print("Staff Assigned!")
 
 def view_course_staff():
-    name = input("Enter course Name: ")
-    course = Course.query.get(name)
-    if not course:
-        print("Course not found.")
-        return
-    print(f'Staff for Course {course.name}:')
-    for assignment in course.assignments:
-        staff = Staff.query.get(assignment.staff_id)
-        print(f'{staff.name} - {staff.role}')
+    while True:
+        name = input("Enter course Name: ").strip()
+        course = Course.query.get(name)
+        if not course:
+            print("Course not found.")
+            continue
+
+        print(f'Staff for Course {course.name}: ')
+
+        for assignment in course.assignments:
+            staff = Staff.query.get(assignment.staff_id)
+            print(f'{staff.name} - {staff.role}')
+
+        break
     
