@@ -76,4 +76,23 @@ class UsersIntegrationTests(unittest.TestCase):
         user = get_user(1)
         assert user.username == "ronnie"
         
+class CourseUnitTests(unittest.TestCase):
 
+    @patch('builtins.input', side_effect=["Math101"])
+    def test_create_course(self, mock_input):
+        course = create_course()
+        self.assertEqual(course.name, "Math101")
+
+    @patch('App.Course.query')
+    def test_list_courses(self, mock_query):
+        mock_query.all.return_value = [
+            Course(name="Math101"),
+            Course(name="Physics202"),
+        ]
+
+        courses = list_courses()
+
+        self.assertEqual(len(courses), 2) 
+        self.assertEqual(courses[0].name, "Math101") 
+        self.assertEqual(courses[1].name, "Physics202")
+        
