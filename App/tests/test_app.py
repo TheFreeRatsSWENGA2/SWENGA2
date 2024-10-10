@@ -71,6 +71,9 @@ class UsersIntegrationTests(unittest.TestCase):
         assert user.username == "ronnie"
         
 
+
+
+
 class CourseUnitTests(unittest.TestCase):
 
     @patch('builtins.input', side_effect=["Math101"])
