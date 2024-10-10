@@ -78,8 +78,9 @@ class CourseUnitTests(unittest.TestCase):
         course = create_course()
         self.assertEqual(course.name, "Math101")
 
-    @patch('App.Course.query')
+    @patch('App.Course.query') 
     def test_list_courses(self, mock_query):
+        
         mock_query.all.return_value = [
             Course(name="Math101"),
             Course(name="Physics202"),
@@ -88,6 +89,6 @@ class CourseUnitTests(unittest.TestCase):
         courses = list_courses()
 
         self.assertEqual(len(courses), 2) 
-        self.assertEqual(courses[0].name, "Math101") 
+        self.assertEqual(courses[0].name, "Math101")
         self.assertEqual(courses[1].name, "Physics202")
         

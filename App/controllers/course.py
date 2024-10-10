@@ -32,6 +32,8 @@ def list_courses():
     else:
         print("No courses found.")
 
+    return courses
+
 
 def list_staff():
     staff_members = Staff.query.all()
