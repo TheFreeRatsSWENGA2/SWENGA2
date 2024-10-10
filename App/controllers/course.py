@@ -31,7 +31,7 @@ def list_courses():
             print(f"Name: {course.name}")
     else:
         print("No courses found.")
-
+    return courses
     return courses
 
 
