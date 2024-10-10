@@ -23,12 +23,13 @@ def create_course():
     
 
 def list_course():
-    courses = Course.query.all() 
-    if courses:  
+    courses = Course.query.all()
+    if courses:
         print("Courses:")
         for course in courses:
-            print(f"ID: {course.id}, Name: {course.name}")
+            print(f"Name: {course.name}")
     else:
         print("No courses found.")
+
 
 

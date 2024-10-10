@@ -8,6 +8,3 @@ def initialize():
     db.drop_all()
     db.create_all()
     create_user('bob', 'bobpass')
-    create_course()
-    create_staff()
-    assign_staff()
