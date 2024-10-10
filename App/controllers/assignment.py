@@ -26,7 +26,7 @@ def assign_staff():
         existingStaff = Staff.query.filter_by(id=staff_id).first()
 
         if not existingStaff:
-            print("STaff member does not exist")
+            print("Staff member does not exist")
 
 
         else:
@@ -40,7 +40,7 @@ def assign_staff():
     assignment = Assignment(course_name=course_name, staff_id=staff_id)
     db.session.add(assignment)
     db.session.commit()
-    print("Staff Assigned!")
+    print(f'Staff member: {assignment.id}: ({existingStaff.name}) assigned to: {assignment.course_name}')
 
 def view_course_staff():
     while True:
