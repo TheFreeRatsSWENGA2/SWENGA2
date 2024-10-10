@@ -64,8 +64,8 @@ def test_authenticate():
 class UsersIntegrationTests(unittest.TestCase):
 
     def test_create_user(self):
-        user = create_user("bob", "bobpass")
-        assert user.username == "bob"
+        user = create_user("rick", "bobpass")
+        assert user.username == "rick"
 
     def test_get_all_users_json(self):
         users_json = get_all_users_json()
