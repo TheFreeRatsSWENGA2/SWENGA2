@@ -58,3 +58,21 @@ def view_course_staff_view(course_name):
         staff = Staff.query.get(assignment.staff_id)
         staff_list.append({"name": staff.name, "role": staff.role})
     return jsonify({"course_name": course.name, "staff": staff_list}), 200
+
+
+@course_views.route('/list_staff', methods=['GET'])
+def list_staff_view():
+    staff_members = Staff.query.all()
+    
+    if not staff_members:
+        return jsonify({"message": "No staff members found."}), 404
+
+    staff_list = []
+    for staff in staff_members:
+        staff_list.append({
+            "id": staff.id,
+            "name": staff.name,
+            "role": staff.role
+        })
+
+    return jsonify({"staff": staff_list}), 200
