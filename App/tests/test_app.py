@@ -4,15 +4,8 @@ from unittest.mock import patch
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User
-from App.controllers import (
-    create_user,
-    get_all_users_json,
-    login,
-    get_user,
-    get_user_by_username,
-    update_user
-)
+from App.models import *
+from App.controllers import *
 
 
 LOGGER = logging.getLogger(__name__)
@@ -77,6 +70,7 @@ class UsersIntegrationTests(unittest.TestCase):
         user = get_user(1)
         assert user.username == "ronnie"
         
+
 class CourseUnitTests(unittest.TestCase):
 
     @patch('builtins.input', side_effect=["Math101"])

@@ -20,9 +20,10 @@ def create_course():
     db.session.add(course)
     db.session.commit()
     print("Course created!")
+    return course
     
 
-def list_course():
+def list_courses():
     courses = Course.query.all()
     if courses:
         print("Courses:")
