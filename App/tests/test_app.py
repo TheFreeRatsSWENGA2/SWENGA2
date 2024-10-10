@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import *
+from App.models import User
 from App.controllers import *
 
 
@@ -68,6 +68,7 @@ def empty_db():
     create_db()
     yield app.test_client()
     db.drop_all()
+
 
 def test_authenticate():
     user = create_user("bob", "bobpass")
