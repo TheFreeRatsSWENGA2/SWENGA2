@@ -84,3 +84,26 @@ def list_staff_command():
     """Lists all staff members in the database."""
     list_staff() 
 
+test = AppGroup('test', help='Testing commands') 
+
+@test.command("course", help="Run course tests")
+@click.argument("type", default="all")
+def course_tests_command(type):
+    if type == "unit":
+        sys.exit(pytest.main(["-k", "CourseUnitTests"]))
+    elif type == "int":
+        sys.exit(pytest.main(["-k", "CourseIntegrationTests"]))
+    else:
+        sys.exit(pytest.main(["-k", "Course"])) 
+
+@test.command("user", help="Run user tests")
+@click.argument("type", default="all")
+def user_tests_command(type):
+    if type == "unit":
+        sys.exit(pytest.main(["-k", "UserUnitTests"]))  
+    elif type == "int":
+        sys.exit(pytest.main(["-k", "UserIntegrationTests"]))  
+    else:
+        sys.exit(pytest.main(["-k", "User"]))
+
+app.cli.add_command(test)
