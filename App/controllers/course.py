@@ -50,5 +50,27 @@ def get_course():
         print(f"'{courseName}' was not found")
 
 
+def update_course():
+    while True:
+        course_name = input("Enter the course name to update: ").strip()
+
+        if not course_name:
+            print("Course name cannot be empty!")
+            continue
+
+        existing_course = Course.query.filter_by(name=course_name).first()
+
+        if not existing_course:
+            print(f"Course '{course_name}' does not exist.")
+            continue
+        break
+
+    new_name = input("Enter the new course name (or press enter to keep the current name): ").strip()
+    
+    if new_name:
+        existing_course.name = new_name
+
+    db.session.commit()
+    print(f"Course updated to '{existing_course.name}'.")
 
 
