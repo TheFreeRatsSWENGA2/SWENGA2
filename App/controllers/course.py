@@ -35,21 +35,7 @@ def list_courses():
     return courses
 
 
-def list_staff():
-    staff_members = Staff.query.all()
-    
-    if not staff_members:
-        return jsonify({"message": "No staff members found."}), 404
 
-    staff_list = []
-    for staff in staff_members:
-        staff_list.append({
-            "id": staff.id,
-            "name": staff.name,
-            "role": staff.role
-        })
-
-    return jsonify({"staff": staff_list}), 200
 
 
 

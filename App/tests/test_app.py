@@ -57,7 +57,7 @@ class CourseUnitTests(unittest.TestCase):
         self.assertEqual(courses[0].name, "Math101")
         self.assertEqual(courses[1].name, "Physics202")
 
-    
+    @patch()
 
 
 
