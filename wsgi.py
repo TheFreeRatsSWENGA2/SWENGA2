@@ -84,6 +84,10 @@ def list_staff_command():
     """Lists all staff members in the database."""
     list_staff() 
 
+@app.cli.command('search_course')
+def get_course_command():
+    get_course()
+
 test = AppGroup('test', help='Testing commands') 
 
 @test.command("course", help="Run course tests")

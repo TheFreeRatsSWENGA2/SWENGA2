@@ -40,11 +40,14 @@ def get_course():
         if not courseName:
             print("Search field cannot be empty")
             continue
-    
-    break
+        break
 
     course_search = Course.query.filter_by(name=courseName).first()
-    print(f"'{course_search.name}' was found")
+
+    if course_search:
+        print(f"'{course_search.name}' was found")
+    else:
+        print(f"'{courseName}' was not found")
 
 
 
