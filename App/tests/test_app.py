@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User
+from App.models import *
 from App.controllers import *
 
 
@@ -57,9 +57,38 @@ class CourseUnitTests(unittest.TestCase):
         self.assertEqual(courses[0].name, "Math101")
         self.assertEqual(courses[1].name, "Physics202")
 
-    @patch()
+    @patch('builtins.input', side_effect=['Math101'])  # Mock input to simulate user entering "Math101"
+    @patch('App.Course.query')  # Mock the Course query
+    @patch('App.Staff.query')  # Mock the Staff query
+    def test_view_course_staff_math(self, mock_staff_query, mock_course_query, mock_input):
+        # Create a mock course for Math101
+        mock_course = Course(name="Math101")
 
+        # Mock the return value for Course.query.filter_by
+        mock_course_query.filter_by.return_value.first.return_value = mock_course
+        
+        # Create mock staff members for Math101
+        mock_staff_1 = Staff(id=1, name="Alice Johnson", role="Professor")
+        mock_staff_2 = Staff(id=2, name="Bob Smith", role="Lecturer")
 
+        # Create mock assignments for Math101
+        mock_assignment_1 = Assignment(course_name="Math101", staff_id=1)
+        mock_assignment_2 = Assignment(course_name="Math101", staff_id=2)
+
+        # Assign mock assignments to the Math101 course
+        mock_course.assignments = [mock_assignment_1, mock_assignment_2]
+        
+        # Mock Staff.query.get to return the mock staff members
+        mock_staff_query.get.side_effect = lambda staff_id: mock_staff_1 if staff_id == 1 else mock_staff_2
+
+        # Call the function for Math101
+        with patch('builtins.print') as mock_print:  # Mock print to capture output
+            view_course_staff()
+
+        # Assert that the output is as expected for Math101
+        mock_print.assert_any_call('Staff for Course Math101: ')
+        mock_print.assert_any_call('Alice Johnson - Professor')
+        mock_print.assert_any_call('Bob Smith - Lecturer')
 
 '''
     Integration Tests
