@@ -73,5 +73,5 @@ def update_course():
 
     db.session.commit()
     print(f"Course updated to '{existing_course.name}'.")
-
+    return existing_course
 

@@ -121,7 +121,7 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_update_user(self):
         update_user(1, "ronnie")
         user = get_user(1)
-        assert user.username == "ronnie"
+        self.assertEqual(user.username, 'ronnie')
 
 class CourseIntegrationTests(unittest.TestCase):
 
@@ -131,10 +131,19 @@ class CourseIntegrationTests(unittest.TestCase):
         courseGet = get_course()
         self.assertEqual(courseGet.name, "Math101")
 
-    @patch('builtins.input', side_effect=['MATH101', 'Raul Menendez', 'Head Lecturer', 'PHYS101', 'MATH101', '1'])#This comment is just to test if my commit is working
+    @patch('builtins.input', side_effect=['MATH101', 'Raul Menendez', 'Head Lecturer', 'PHYS101', 'MATH101', '1'])
     def test_assign_staff(self, mock_input):
         course = create_course()
         staff = create_staff()
         newStaff = assign_staff()
         self.assertEqual(newStaff.course_name, 'MATH101')
         self.assertEqual(newStaff.staff_id, 1)
+
+    @patch('builtins.input', side_effect= ['MATH101', 'MATH101', 'MATH101', 'PSYC101', 'PSYC101'])
+    def test_update_course(self, mock_input):
+        course = create_course()
+        course = get_course()
+        courseUp = update_course()
+        course = get_course()
+        self.assertEqual(courseUp.name, 'PSYC101')
+        self.assertEqual(course.name, 'PSYC101')
