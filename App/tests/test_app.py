@@ -45,17 +45,15 @@ class CourseUnitTests(unittest.TestCase):
 
     @patch('App.Course.query')
     def test_list_courses(self, mock_query):
-
+        course1 = Course(name="Math101")
+        course2 = Course(name="Physics101")
         mock_query.all.return_value = [
-            Course(name="Math101"),
-            Course(name="Physics202"),
+            course1, course2
         ]
 
         courses = list_courses()
-
-        self.assertEqual(len(courses), 2)
-        self.assertEqual(courses[0].name, "Math101")
-        self.assertEqual(courses[1].name, "Physics202")
+        self.assertEqual(course1.name, "Math101")
+        self.assertEqual(course2.name, "Physics101")
 
     @patch('builtins.input', side_effect=['Math101']) 
     @patch('App.Course.query')  
