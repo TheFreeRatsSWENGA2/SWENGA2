@@ -1,10 +1,10 @@
 import os, tempfile, pytest, logging, unittest
 from werkzeug.security import check_password_hash, generate_password_hash
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User
+from App.models import *
 from App.controllers import *
 
 
@@ -57,8 +57,36 @@ class CourseUnitTests(unittest.TestCase):
         self.assertEqual(courses[0].name, "Math101")
         self.assertEqual(courses[1].name, "Physics202")
 
-    def view_course_staff(self):
-        
+    @patch('App.models.Course.query.filter_by')  # Adjusted to mock filter_by
+    @patch('App.models.Staff.query.get')
+    @patch('builtins.input', side_effect=['Math101'])
+    def test_view_course_staff(self, mock_input, mock_staff_get, mock_course_filter_by):
+        # Mock Course object with assignments
+        mock_course = MagicMock(name="Math101")
+        mock_course.assignments = [MagicMock(staff_id=1), MagicMock(staff_id=2)]
+        mock_course_filter_by.return_value.first.return_value = mock_course
+
+        # Mock Staff objects
+        mock_staff_get.side_effect = [
+            MagicMock(name="John Doe", role="Lecturer"),
+            MagicMock(name="Jane Smith", role="TA")
+        ]
+
+        # Mock print
+        with patch('builtins.print') as mock_print:
+            view_course_staff()
+
+        # Assertions
+        mock_course_filter_by.assert_called_once_with(name='Math101')
+        mock_staff_get.assert_any_call(1)
+        mock_staff_get.assert_any_call(2)
+
+        # Check print output
+        mock_print.assert_any_call('Staff for Course Math101: ')
+        mock_print.assert_any_call('John Doe - Lecturer')
+        mock_print.assert_any_call('Jane Smith - TA')
+
+
 
 '''
     Integration Tests
