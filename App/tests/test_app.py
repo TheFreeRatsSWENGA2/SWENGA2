@@ -111,7 +111,9 @@ class UsersIntegrationTests(unittest.TestCase):
         assert user.username == "rick"
 
     def test_get_all_users_json(self):
-        user = create_user("rick", "bobpass")
+
+        user = create_user("bob", "bobpass")
+        user2 = create_user("rick", "bobpass")
         users_json = get_all_users_json()
         self.assertListEqual([{'id': 1, 'username': 'bob'}, {'id': 2, 'username': 'rick'}], users_json)
 
@@ -129,7 +131,7 @@ class CourseIntegrationTests(unittest.TestCase):
         courseGet = get_course()
         self.assertEqual(courseGet.name, "Math101")
 
-    @patch('builtins.input', side_effect=['MATH101', 'Raul Menendez', 'Head Lecturer', 'PHYS101', 'MATH101', '1'])
+    @patch('builtins.input', side_effect=['MATH101', 'Raul Menendez', 'Head Lecturer', 'PHYS101', 'MATH101', '1'])#This comment is just to test if my commit is working
     def test_assign_staff(self, mock_input):
         course = create_course()
         staff = create_staff()
