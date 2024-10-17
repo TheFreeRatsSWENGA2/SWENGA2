@@ -28,6 +28,7 @@ def create_staff():
     db.session.add(staff)
     db.session.commit()
     print(f'Staff Created! Staff ID:{staff.id}')
+    return staff
 
 
 

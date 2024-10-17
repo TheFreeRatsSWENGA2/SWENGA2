@@ -41,6 +41,7 @@ def assign_staff():
     db.session.add(assignment)
     db.session.commit()
     print(f'Staff member: {assignment.id}: ({existingStaff.name}) assigned to: {assignment.course_name}')
+    return assignment
 
 def view_course_staff():
     while True:

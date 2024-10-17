@@ -119,3 +119,17 @@ class UsersIntegrationTests(unittest.TestCase):
         user = get_user(1)
         assert user.username == "ronnie"
 
+class CourseIntegrationTests(unittest.TestCase):
+
+    @patch('builtins.input', side_effect='Math101')
+    def test_create_course(self, mock_input):
+        course = create_course()
+        self.assertEqual(course.name, "Math101")
+
+    @patch('builtins.input', side_effect=['MATH101', 'Raul Menendez', 'Head Lecturer', 'PHYS101', 'MATH101', '1'])
+    def test_assign_staff(self, mock_input):
+        course = create_course()
+        staff = create_staff()
+        newStaff = assign_staff()
+        self.assertEqual(newStaff.course_name, 'MATH101')
+        self.assertEqual(newStaff.staff_id, 1)
