@@ -32,9 +32,19 @@ def list_courses():
     else:
         print("No courses found.")
     return courses
-    return courses
 
+def get_course():
+    while True:
+        courseName = input("Enter a course to search for: ").strip()
 
+        if not courseName:
+            print("Search field cannot be empty")
+            continue
+    
+    break
+
+    course_search = Course.query.filter_by(name=courseName).first()
+    print(f"'{course_search.name}' was found")
 
 
 
