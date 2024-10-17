@@ -59,6 +59,10 @@ class CourseUnitTests(unittest.TestCase):
 
     @patch('App.models.Course.query.filter_by')  # Adjusted to mock filter_by
     @patch('App.models.Staff.query.get')
+
+    @patch('App.models.Course.query.filter_by')  # Correct path to Course.query.filter_by
+    @patch('App.models.Staff.query.get') 
+
     @patch('builtins.input', side_effect=['Math101'])
     def test_view_course_staff(self, mock_input, mock_staff_get, mock_course_filter_by):
         # Mock Course object with assignments

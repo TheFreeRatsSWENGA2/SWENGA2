@@ -45,7 +45,7 @@ def assign_staff():
 def view_course_staff():
     while True:
         name = input("Enter course Name: ").strip()
-        course = Course.query.get(name)
+        course = Course.query.filter_by(name=name).first()
         if not course:
             print("Course not found.")
             continue
