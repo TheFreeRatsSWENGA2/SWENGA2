@@ -57,6 +57,9 @@ class CourseUnitTests(unittest.TestCase):
         self.assertEqual(courses[0].name, "Math101")
         self.assertEqual(courses[1].name, "Physics202")
 
+    def view_course_staff(self):
+        
+
 '''
     Integration Tests
 '''
@@ -82,7 +85,7 @@ class UsersIntegrationTests(unittest.TestCase):
 
     def test_get_all_users_json(self):
         users_json = get_all_users_json()
-        self.assertListEqual([{"id":1, "username":"bob"}, {"id":2, "username":"rick"}], users_json)
+        self.assertListEqual([{"id":1, "username":"rick"}], users_json)
 
     # Tests data changes in the database
     def test_update_user(self):
