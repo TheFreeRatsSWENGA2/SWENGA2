@@ -86,6 +86,7 @@ class CourseUnitTests(unittest.TestCase):
         for staff in staff_members:
             mock_print.assert_any_call(f'{staff.name} - {staff.role}')
 
+
 '''
     Integration Tests
 '''
