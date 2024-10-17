@@ -60,7 +60,7 @@ class CourseUnitTests(unittest.TestCase):
     @patch('builtins.input', side_effect=['Math101']) 
     @patch('App.Course.query')  
     @patch('App.Staff.query') 
-    def test_view_course_staff_any(self, mock_staff_query, mock_course_query, mock_input):
+    def test_view_course_staff(self, mock_staff_query, mock_course_query, mock_input):
         
         course_name = "Math101"
         staff_members = [
