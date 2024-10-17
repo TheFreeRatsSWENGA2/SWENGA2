@@ -20,8 +20,8 @@ def get_all_users_json():
     users = User.query.all()
     if not users:
         return []
-    users = [user.get_json() for user in users]
-    return users
+    userjson = [user.get_json() for user in users]
+    return userjson
 
 def update_user(id, username):
     user = get_user(id)

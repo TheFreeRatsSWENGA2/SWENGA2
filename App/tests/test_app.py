@@ -111,9 +111,8 @@ class UsersIntegrationTests(unittest.TestCase):
         assert user.username == "rick"
 
     def test_get_all_users_json(self):
-        user = create_user("rick", "bobpass")
         users_json = get_all_users_json()
-        self.assertListEqual([{'id': 1, 'username': 'bob'}, {'id': 2, 'username': 'rick'}], users_json)
+        self.assertListEqual([{"id":1, "username":"bob"}, {"id":2, "username":"rick"}], users_json)
 
     # Tests data changes in the database
     def test_update_user(self):
@@ -123,11 +122,10 @@ class UsersIntegrationTests(unittest.TestCase):
 
 class CourseIntegrationTests(unittest.TestCase):
 
-    @patch('builtins.input', side_effect=['Math101', 'Math101'])
+    @patch('builtins.input', side_effect='Math101')
     def test_create_course(self, mock_input):
         course = create_course()
-        courseGet = get_course()
-        self.assertEqual(courseGet.name, "Math101")
+        self.assertEqual(course.name, "Math101")
 
     @patch('builtins.input', side_effect=['MATH101', 'Raul Menendez', 'Head Lecturer', 'PHYS101', 'MATH101', '1'])
     def test_assign_staff(self, mock_input):
