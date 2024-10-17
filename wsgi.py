@@ -46,7 +46,9 @@ def create_user_command(username, password):
 @click.argument("format", default="string")
 def list_user_command(format):
     if format == 'string':
-        print(get_all_users())
+        users = get_all_users()
+        for user in users:
+            print(user.id, "-", user.username)
     else:
         print(get_all_users_json())
 
