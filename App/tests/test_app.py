@@ -60,35 +60,41 @@ class CourseUnitTests(unittest.TestCase):
     @patch('builtins.input', side_effect=['Math101'])  # Mock input to simulate user entering "Math101"
     @patch('App.Course.query')  # Mock the Course query
     @patch('App.Staff.query')  # Mock the Staff query
-    def test_view_course_staff_math(self, mock_staff_query, mock_course_query, mock_input):
-        # Create a mock course for Math101
-        mock_course = Course(name="Math101")
+    def test_view_course_staff_any(self, mock_staff_query, mock_course_query, mock_input):
+        # Define the course name and staff members directly in the test method
+        course_name = "Math101"
+        staff_members = [
+            Staff(id=1, name="Alice Johnson", role="Professor"),
+            Staff(id=2, name="Bob Smith", role="Lecturer"),
+        ]
+
+        # Create a mock course for the specified course name
+        mock_course = Course(name=course_name)
 
         # Mock the return value for Course.query.filter_by
         mock_course_query.filter_by.return_value.first.return_value = mock_course
+
+        # Create mock assignments for the specified staff members
+        mock_assignments = [
+            Assignment(course_name=course_name, staff_id=staff.id) for staff in staff_members
+        ]
+        # Assigning mock assignments to the course
+        mock_course.assignments = mock_assignments
         
-        # Create mock staff members for Math101
-        mock_staff_1 = Staff(id=1, name="Alice Johnson", role="Professor")
-        mock_staff_2 = Staff(id=2, name="Bob Smith", role="Lecturer")
+        # Mock Staff.query.get to return the appropriate staff members
+        def side_effect_get(staff_id):
+            return next((staff for staff in staff_members if staff.id == staff_id), None)
 
-        # Create mock assignments for Math101
-        mock_assignment_1 = Assignment(course_name="Math101", staff_id=1)
-        mock_assignment_2 = Assignment(course_name="Math101", staff_id=2)
+        mock_staff_query.get.side_effect = side_effect_get
 
-        # Assign mock assignments to the Math101 course
-        mock_course.assignments = [mock_assignment_1, mock_assignment_2]
-        
-        # Mock Staff.query.get to return the mock staff members
-        mock_staff_query.get.side_effect = lambda staff_id: mock_staff_1 if staff_id == 1 else mock_staff_2
-
-        # Call the function for Math101
+        # Call the function for the specified course
         with patch('builtins.print') as mock_print:  # Mock print to capture output
             view_course_staff()
 
-        # Assert that the output is as expected for Math101
-        mock_print.assert_any_call('Staff for Course Math101: ')
-        mock_print.assert_any_call('Alice Johnson - Professor')
-        mock_print.assert_any_call('Bob Smith - Lecturer')
+        # Assert that the output is as expected for the specified course
+        mock_print.assert_any_call(f'Staff for Course {course_name}: ')
+        for staff in staff_members:
+            mock_print.assert_any_call(f'{staff.name} - {staff.role}')
 
 '''
     Integration Tests
