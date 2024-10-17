@@ -46,6 +46,7 @@ def get_course():
 
     if course_search:
         print(f"'{course_search.name}' was found")
+        return course_search
     else:
         print(f"'{courseName}' was not found")
 
