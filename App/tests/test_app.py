@@ -57,41 +57,33 @@ class CourseUnitTests(unittest.TestCase):
         self.assertEqual(courses[0].name, "Math101")
         self.assertEqual(courses[1].name, "Physics202")
 
-    @patch('builtins.input', side_effect=['Math101'])  # Mock input to simulate user entering "Math101"
-    @patch('App.Course.query')  # Mock the Course query
-    @patch('App.Staff.query')  # Mock the Staff query
+    @patch('builtins.input', side_effect=['Math101']) 
+    @patch('App.Course.query')  
+    @patch('App.Staff.query') 
     def test_view_course_staff_any(self, mock_staff_query, mock_course_query, mock_input):
-        # Define the course name and staff members directly in the test method
+        
         course_name = "Math101"
         staff_members = [
             Staff(id=1, name="Alice Johnson", role="Professor"),
-            Staff(id=2, name="Bob Smith", role="Lecturer"),
+            Staff(id=2, name="Bob Smith", role="TA"),
         ]
 
-        # Create a mock course for the specified course name
         mock_course = Course(name=course_name)
-
-        # Mock the return value for Course.query.filter_by
         mock_course_query.filter_by.return_value.first.return_value = mock_course
 
-        # Create mock assignments for the specified staff members
         mock_assignments = [
             Assignment(course_name=course_name, staff_id=staff.id) for staff in staff_members
         ]
-        # Assigning mock assignments to the course
         mock_course.assignments = mock_assignments
         
-        # Mock Staff.query.get to return the appropriate staff members
         def side_effect_get(staff_id):
             return next((staff for staff in staff_members if staff.id == staff_id), None)
 
         mock_staff_query.get.side_effect = side_effect_get
 
-        # Call the function for the specified course
-        with patch('builtins.print') as mock_print:  # Mock print to capture output
+        with patch('builtins.print') as mock_print: 
             view_course_staff()
 
-        # Assert that the output is as expected for the specified course
         mock_print.assert_any_call(f'Staff for Course {course_name}: ')
         for staff in staff_members:
             mock_print.assert_any_call(f'{staff.name} - {staff.role}')
