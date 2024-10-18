@@ -99,27 +99,62 @@ def empty_db():
     yield app.test_client()
     db.drop_all()
 
+#remove this if dont work
+@pytest.fixture(autouse=True, scope="function")
+def clean_db():
+    # Clear the database before each test
+    db.session.query(User).delete()
+    db.session.query(Course).delete()  # Clear courses if needed
+    db.session.commit()
+
+
 
 def test_authenticate():
     user = create_user("bob", "bobpass")
     assert login("bob", "bobpass") != None
 
+# class UsersIntegrationTests(unittest.TestCase):
+
+#     def test_create_user(self):
+#         user = create_user("bob", "bobpass")
+#         assert user.username == "bob"
+
+#     def test_get_all_users_json(self):
+#         user = create_user("rick", "bobpass")
+#         users_json = get_all_users_json()
+#         self.assertListEqual([{'id': 1, 'username': 'bob'}, {'id': 2, 'username': 'rick'}], users_json)
+
+#     # Tests data change in the database
+#     def test_update_user(self):
+#         update_user(1, "ronnie")
+#         user = get_user(1)
+#         self.assertEqual(user.username, 'ronnie')
+
 class UsersIntegrationTests(unittest.TestCase):
+
+    def setUp(self):
+        # Clear database or recreate tables here if necessary
+        # For example:
+        db.session.query(User).delete()  # Clear all users before each test
+        db.session.commit()
 
     def test_create_user(self):
         user = create_user("bob", "bobpass")
         assert user.username == "bob"
 
     def test_get_all_users_json(self):
-        user = create_user("rick", "bobpass")
+        create_user("bob", "bobpass")
+        create_user("rick", "bobpass")
         users_json = get_all_users_json()
         self.assertListEqual([{'id': 1, 'username': 'bob'}, {'id': 2, 'username': 'rick'}], users_json)
 
-    # Tests data change in the database
     def test_update_user(self):
+        create_user("bob", "bobpass")
         update_user(1, "ronnie")
         user = get_user(1)
         self.assertEqual(user.username, 'ronnie')
+
+
 
 class CourseIntegrationTests(unittest.TestCase):
 
