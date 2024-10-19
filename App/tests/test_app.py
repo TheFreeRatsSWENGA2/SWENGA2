@@ -164,13 +164,15 @@ class CourseIntegrationTests(unittest.TestCase):
         courseGet = get_course()
         self.assertEqual(courseGet.name, "MATH 101")
 
-    @patch('builtins.input', side_effect=['CIV 101', 'Raul Menendez', 'Head Lecturer', 'CIV 101', '1'])
+    @patch('builtins.input', side_effect=['CIV 101', 'Raul Menendez', 'Lecturer', 'CIV 101', 'Raul Menendez'])
     def test_assign_staff(self, mock_input):
         course = create_course()
         staff = create_staff()
         newStaff = assign_staff()
         self.assertEqual(newStaff.course_name, 'CIV 101')
         self.assertEqual(newStaff.staff_id, 1)
+
+
 
     @patch('builtins.input', side_effect= ['ASTR 101', 'ASTR 101', 'ASTR 101', 'PSYC 101', 'PSYC 101'])
     def test_update_course(self, mock_input):

@@ -59,7 +59,8 @@ def assign_staff():
         return jsonify({"message": success_message}), 200
     else:
         print(success_message)
-        return assignment
+        return assignment  # Return the assignment object for further verification
+
 
 
 
