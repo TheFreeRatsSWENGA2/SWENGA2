@@ -79,7 +79,7 @@ def view_course_staff_command():
 @app.cli.command('list_courses')
 def list_courses_command():
     """List all courses in the database."""
-    list_course() 
+    list_courses() 
 
 @app.cli.command('list_staff')
 def list_staff_command():
