@@ -6,10 +6,9 @@ from App.database import db, get_migrate
 from App.models import *
 from App.main import create_app
 from App.controllers import *
+
 # from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize )
 # from App.controllers import ( create_course, create_staff, assign_staff, view_course_staff )
-from App.controllers import *
-#amir is a
 
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -24,6 +23,10 @@ def init():
     print('database intialized')
     print(get_all_users())
     print(get_all_students())
+    print(get_all_admins())
+    print(get_all_hosts())
+
+
 '''
 User Commands
 '''

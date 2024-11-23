@@ -1,33 +1,23 @@
 from App.models import Student
 from App.database import db
 
-def create_student(studentName, password):
-    newStudent = Student(studentName=studentName, password=password)
-    db.session.add(newStudent)
+def generate_id():
+    # Get the highest student_id from the student table
+    max_id = db.session.query(db.func.max(Student.studentID)).scalar()
+    
+    # If there are no students, start at 1
+    if max_id is None:
+        return 1
+    else:
+        # Otherwise, increment the highest student_id by 1
+        return max_id + 1
+
+def create_student(studentname, password):
+    studentID = generate_id()
+    newstudent = Student(studentID=studentID, studentname=studentname, studentPassword=password)
+    db.session.add(newstudent)
     db.session.commit()
-    return newStudent
-
-def get_student_by_studentname(studentname):
-    return Student.query.filter_by(studentname=studentName).first()
-
-def get_student(id):
-    return Student.query.get(id)
+    return newstudent
 
 def get_all_students():
     return Student.query.all()
-
-def get_all_students_json():
-    students = Student.query.all()
-    if not students:
-        return []
-    studentjson = [student.get_json() for student in students]
-    return studentjson
-
-def update_student(id, studentName):
-    student = get_student(id)
-    if student:
-        student.studentName = studentName
-        db.session.add(student)
-        return db.session.commit()
-    return None
-    
