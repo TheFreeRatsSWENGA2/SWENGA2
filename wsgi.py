@@ -3,8 +3,9 @@ from flask import Flask
 from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
-from App.models import User
+from App.models import *
 from App.main import create_app
+from App.controllers import *
 # from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize )
 # from App.controllers import ( create_course, create_staff, assign_staff, view_course_staff )
 from App.controllers import *
@@ -21,7 +22,8 @@ migrate = get_migrate(app)
 def init():
     initialize()
     print('database intialized')
-
+    print(get_all_users())
+    print(get_all_students())
 '''
 User Commands
 '''
