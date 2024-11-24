@@ -25,6 +25,7 @@ def init():
     print(get_all_students())
     print(get_all_admins())
     print(get_all_hosts())
+    print(get_all_comps())
 
 
 '''
@@ -57,43 +58,6 @@ def list_user_command(format):
     else:
         print(get_all_users_json())
 
-app.cli.add_command(user_cli) # add the group to the cli
-
-create_cli = AppGroup('create', help='create commands')
-
-@app.cli.command('create_course')
-def create_course_command():
-    """Create a new course."""
-    create_course()
-
-@app.cli.command('create_staff')
-def create_staff_command():
-    """Create new staff member."""
-    create_staff()
-
-@app.cli.command('assign_staff')
-def assign_staff_command():
-    """Assign staff to courses."""
-    assign_staff()
-
-@app.cli.command('view_course_staff')
-def view_course_staff_command():
-    """View all the staff for a specific course."""
-    view_course_staff()
-
-@app.cli.command('list_courses')
-def list_courses_command():
-    """List all courses in the database."""
-    list_courses() 
-
-@app.cli.command('list_staff')
-def list_staff_command():
-    """Lists all staff members in the database."""
-    list_staff() 
-
-@app.cli.command('search_course')
-def get_course_command():
-    get_course()
 
 test = AppGroup('test', help='Testing commands') 
 
@@ -118,3 +82,14 @@ def user_tests_command(type):
         sys.exit(pytest.main(["-k", "User"]))
 
 app.cli.add_command(test)
+
+
+# host_cli = AppGroup('host', help='Host object commands')
+
+# @host_cli.command('create', help='Create a host')
+# @click.option('--host-name', prompt='Please enter Host name', help='The name of the host.')
+# @click.option('--password', prompt=True, hide_input=True, confirmation_prompt=True, help='Password for the host.')
+# def create_host_command(host_name, password):
+#     print(create_host(host_name, password))
+
+# app.cli.add_command(host_cli)

@@ -6,6 +6,7 @@ from .course import *
 from .staff import *
 from .admin import *
 from .host import *
+from .competition import *
 
 def initialize():
     db.drop_all()
@@ -16,4 +17,6 @@ def initialize():
     create_admin('Mr. Bob', 'bobbieboi')
     create_host('Steve','steve')
     create_host('Harvey', 'harvey')
+    create_competition('Math Decathalon')
+    create_competition('Hackathon')
 

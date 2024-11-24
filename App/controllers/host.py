@@ -1,6 +1,7 @@
 from App.models import Host
 from App.database import db
 
+
 def generate_id():
     # Get the highest student_id from the student table
     max_id = db.session.query(db.func.max(Host.hostID)).scalar()
@@ -21,3 +22,7 @@ def create_host(hostName, password):
 
 def get_all_hosts():
     return Host.query.all()
+
+def host_competition():
+    hostedComp = create_competitionHost(competitionID, hostID)
+    return hostedComp

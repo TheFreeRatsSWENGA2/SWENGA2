@@ -5,3 +5,7 @@ from .course import *
 from .staff import *
 from .assignment import *
 from .student import *
+from .competition import *
+from .student import *
+from .admin import *
+from .host import *
